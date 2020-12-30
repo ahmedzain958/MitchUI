@@ -37,14 +37,15 @@ class MainActivityTest{
             hasAction(Intent.ACTION_PICK),
             hasData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         )
-        val activityResult = createGalleryPickActivityResultStub()
-        intending(expectedIntent).respondWith(activityResult)
+        val activityResult = createGalleryPickActivityResultStub()//here we created activity result
+        intending(expectedIntent).respondWith(activityResult)//we tell that we intent to receive that activity reult from the dialling expectedIntent
 
         // Execute and Verify
-        onView(withId(R.id.button_open_gallery)).perform(click())
-        intended(expectedIntent)
+        onView(withId(R.id.button_open_gallery)).perform(click())//we execute a real click
+        intended(expectedIntent)// we verify that as intended or not
     }
-
+    //here we create a customized activity result as we don't guarantee what will be chosen from the user,
+    // we set a uri of already existing launcher image in every android project
     private fun createGalleryPickActivityResultStub(): ActivityResult {
         val resources: Resources = InstrumentationRegistry.getInstrumentation().context.resources
         val imageUri = Uri.parse(
@@ -54,8 +55,8 @@ class MainActivityTest{
                     resources.getResourceEntryName(R.drawable.ic_launcher_background)
         )
         val resultIntent = Intent()
-        resultIntent.setData(imageUri)
-        return ActivityResult(RESULT_OK, resultIntent)
+        resultIntent.setData(imageUri)//here we fill the activity result intent with the image uri
+        return ActivityResult(RESULT_OK, resultIntent)//here we fill the activity result with the intent
     }
 }
 
